@@ -9,6 +9,10 @@ ext.IS_TAG = System.getenv('IS_TAG') != null ? System.getenv('IS_TAG') == "true"
 ext.IS_RELEASE = IS_TAG && !(System.getenv('REPO_TAG_NAME').endsWith('-SNAPSHOT'))
 ext.VERSION = "0.1${IS_RELEASE ? '' : '-SNAPSHOT'}"
 
+ext."signing.keyId" = System.getenv('GPG_KEY_NAME')
+ext."signing.secretKeyRingFile" = "${System.getProperty("user.home")}/.gnupg/secring.gpg"
+ext."signing.password" = System.getenv('GPG_PASSPHRASE')
+
 group 'eu.fthevenet'
 version VERSION
 sourceCompatibility = 1.8
