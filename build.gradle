@@ -1,0 +1,91 @@
+plugins {
+    id 'application'
+    id 'signing'
+    id 'io.codearte.nexus-staging' version '0.20.0'
+    id 'de.marcphilipp.nexus-publish' version '0.1.1'
+}
+
+group 'eu.fthevenet'
+version '0.1'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+description 'Create a changelog from a Github project\'s release history'
+compileJava.options.encoding = 'UTF-8'
+
+mainClassName = 'eu.fthevenet.changelog.commands.ChangeLogCommand'
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+dependencies {
+    compile 'org.apache.httpcomponents:httpclient:4.5.6'
+    compile 'com.google.code.gson:gson:2.8.5'
+    compile 'info.picocli:picocli:3.9.1'
+    compile 'com.vladsch.flexmark:flexmark-all:0.40.4'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = project.name
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom {
+                name = project.name
+                description = project.description
+                url = 'https://github.com/fthevenet/changelog-maker'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'fthevenet'
+                        name = 'Frederic Thevenet'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/fthevenet/changelog-maker.git'
+                    developerConnection = 'scm:git:https://github.com/fthevenet/changelog-maker.git'
+                    url = 'https://github.com/fthevenet/changelog-maker'
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+nexusStaging {
+    username = System.getenv('OSSRH_JIRA_USERNAME')
+    password = System.getenv('OSSRH_JIRA_PASSWORD')
+    packageGroup = 'eu.fthevenet'
+}
+
+nexusPublishing {
+    packageGroup = rootProject.nexusStaging.packageGroup
+    stagingProfileId = rootProject.nexusStaging.stagingProfileId
+    username = rootProject.nexusStaging.username
+    password = rootProject.nexusStaging.password
+}
