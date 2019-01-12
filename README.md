@@ -2,6 +2,8 @@
 
 A command line tool that creates a changelog from a Github project's release history.
 
+It works by pulling all the releases for a specified repository and write a new file with the name, version, date and description of each releases, in a choice of formats (Plain text, Markdown, HTML or PDF).
+
     Usage: changelog [-hV] [-d=<dateFormat>] [-f=<format>] [-o=<output>]
                      [-t=<oauthToken>] <owner> <repo>
     Create a changelog from a Github project's release history
