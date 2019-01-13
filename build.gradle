@@ -7,7 +7,7 @@ plugins {
 
 ext.IS_TAG = System.getenv('IS_TAG') != null ? System.getenv('IS_TAG') == "true" : false
 ext.IS_RELEASE = IS_TAG && !(System.getenv('REPO_TAG_NAME').endsWith('-SNAPSHOT'))
-ext.VERSION = "0.1${IS_RELEASE ? '' : '-SNAPSHOT'}"
+ext.VERSION = "0.2${IS_RELEASE ? '' : '-SNAPSHOT'}"
 
 ext."signing.keyId" = System.getenv('GPG_KEY_NAME')
 ext."signing.secretKeyRingFile" = "${System.getProperty("user.home")}/.gnupg/secring.gpg"
