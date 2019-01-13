@@ -1,5 +1,8 @@
 # changelog-maker
 
+[![Build Status](https://img.shields.io/travis/fthevenet/changelog-maker.svg?logo=travis&logoColor=white&style=flat-square)](https://travis-ci.org/fthevenet/changelog-maker)
+[![Maven Central](https://img.shields.io/maven-central/v/eu.fthevenet/changelog-maker.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22eu.fthevenet%22%20AND%20a:%22changelog-maker%22)
+
 A command line tool that creates a changelog from a Github project's release history.
 
 It works by pulling all the releases for a specified repository and write a new file with the name, version, date and description of each releases, in a choice of formats (Plain text, Markdown, HTML or PDF).
